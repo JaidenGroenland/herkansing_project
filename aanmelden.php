@@ -1,3 +1,57 @@
+<?php
+session_start();
+include ("data.php");
+$warning = false;
+$name = '';
+$age = '';
+$email = '';
+$adres = '';
+$place = '';
+$img = '';
+
+
+if (isset($_POST['submit'])) {
+
+    $name = filter_input(INPUT_POST, 'name', FILTER_SANITIZE_SPECIAL_CHARS);
+    $age = filter_input(INPUT_POST, 'age', FILTER_SANITIZE_SPECIAL_CHARS);
+    $email = filter_input(INPUT_POST, 'email', FILTER_SANITIZE_EMAIL);
+    $emailcheck = filter_input(INPUT_POST, 'email', FILTER_VALIDATE_EMAIL);
+    $adres = filter_input(INPUT_POST, 'adres', FILTER_SANITIZE_SPECIAL_CHARS);
+    $place = filter_input(INPUT_POST, 'place', FILTER_SANITIZE_SPECIAL_CHARS);
+
+    $query = $db->prepare("INSERT INTO players (name,age,email,adres,place,img) VALUES (:name, :age, :email, :adres, :place, :img)");
+    $query->bindParam("name", $name);
+    $query->bindParam("age", $age);
+    $query->bindParam("email", $email);
+    $query->bindParam("adres", $adres);
+    $query->bindParam("place", $place);
+    $query->bindParam("img", $img);
+
+
+    if (empty($_POST['name']) || empty($_POST['age']) || empty($_POST['adres']) || empty($_POST['place']) || empty($_POST['email']) || empty($_POST['img'])) {
+        $warning = 'je hebt niet alles ingevuld';
+    } elseif (!$emailcheck) {
+        $warning = 'Dat is geen correct emailadres';
+    } else {
+
+
+
+        $_SESSION['name'] = $name;
+        $_SESSION['age'] = $age;
+        $_SESSION['email'] = $email;
+        $_SESSION['adres'] = $adres;
+        $_SESSION['place'] = $place;
+        $_SESSION['place'] = $img;
+
+        header('Location: thankyou.php');
+    }
+
+
+
+}
+
+?>
+
 <html lang="en">
 <head>
     <meta charset="UTF-8">
@@ -30,17 +84,71 @@
                     <li class="nav-item">
                         <a class="nav-link active text-light fs-4 col-1" href="aanmelden.php"><u>aanmelden</u></a>
                     </li>
+                    <li class="nav-item">
+                        <a class="nav-link active text-light fs-4 col-1" href="lijst.php">lijst</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link active text-light fs-4 col-1" href="toevoegen.php">toevoegen</a>
+                    </li>
                 </ul>
             </div>
         </div>
     </nav>
-    <br>
-    <br>
-    <!--here is the text-->
+    <!--start banner-->
     <div class="container-fluid p-0">
         <img src="img/voetbal-banner.jpg" class="pb-5" alt="banner" width="100%">
 
+        <!--here is the form for conactgegevens-->
+        <?php
+        if ($warning) {
+            echo $warning;
+        }
+        ?>
+        <div class="container">
+        <form method="POST" action="" class="">
+            <p>
+                <label class="form-label">volledige naam</label>
+                <br>
+                <input type="text" name="name" value="<?=$name?>" class="form-control ">
+            </p>
 
+            <p>
+                <label class="form-label">leeftijd</label>
+                <br>
+                <input type="number" name="age" value="<?=$age?>" class="form-control">
+            </p>
+
+            <p>
+                <label class="form-label">email</label>
+                <br>
+                <input type="email" name="email" value="<?= $email?>" class="form-control">
+            </p>
+
+            <p>
+                <label class="form-label">Adres</label>
+                <br>
+                <input type="text" name="adres" value="<?=$adres?>" class="form-control">
+            </p>
+
+            <p>
+                <label class="form-label">Woonplaats</label>
+                <br>
+                <input type="text" name="place" value="<?=$place?>" class="form-control">
+            </p>
+
+            <p>
+                <label class="form-label">img</label>
+                <br>
+                <input type="text" name="img" value="<?=$img?>" class="form-control">
+            </p>
+
+            <p>
+                <input type="submit" value="Verstuur" name="submit" class="form-control">
+            </p>
+        </form>
+        </div>
+
+        <!--start footer-->
         <footer class="container-fluid bg-primary">
     <div class="container text-white">
         <div class="row text-center fs-15">

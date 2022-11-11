@@ -30,16 +30,21 @@
                 <li class="nav-item">
                     <a class="nav-link text-light fs-4 col-1" href="aanmelden.php">aanmelden</a>
                 </li>
+                <li class="nav-item">
+                    <a class="nav-link active text-light fs-4 col-1" href="lijst.php">lijst</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link active text-light fs-4 col-1" href="toevoegen.php">toevoegen</a>
+                </li>
             </ul>
         </div>
     </div>
 </nav>
-    <br>
-    <br>
-<!--here is the text-->
+<!--start banner-->
 <div class="container-fluid p-0">
     <img src="img/voetbal-banner.jpg" class="pb-5" alt="banner" width="100%">
 
+    <!--welkom with php-->
     <?php
     $todayDate = date("H");
 
@@ -93,7 +98,7 @@
 </a>
 <br>
 <br>
-<!--the footer-->
+<!--start footer-->
 <footer class="container-fluid bg-primary">
     <div class="container text-white">
         <div class="row text-center fs-15">

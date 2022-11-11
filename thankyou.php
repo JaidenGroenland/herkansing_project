@@ -1,3 +1,9 @@
+<?php
+session_start();
+include ("data.php");
+
+?>
+
 <html lang="en">
 <head>
     <meta charset="UTF-8">
@@ -25,10 +31,10 @@
                         <a class="nav-link text-light fs-4 col-1 ps-4" aria-current="page" href="index.php">home</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link active text-light fs-4 col-1 ps-4" aria-current="page" href="overons.php"><u>S.V.GROENLAND</u></a>
+                        <a class="nav-link text-light fs-4 col-1 ps-4" aria-current="page" href="overons.php">S.V.GROENLAND</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link text-light fs-4 col-1" href="aanmelden.php">aanmelden</a>
+                        <a class="nav-link active text-light fs-4 col-1" href="aanmelden.php"><u>aanmelden</u></a>
                     </li>
                     <li class="nav-item">
                         <a class="nav-link active text-light fs-4 col-1" href="lijst.php">lijst</a>
@@ -40,47 +46,55 @@
             </div>
         </div>
     </nav>
-    <!--start banner-->
+    <!--here is the text-->
     <div class="container-fluid p-0">
         <img src="img/voetbal-banner.jpg" class="pb-5" alt="banner" width="100%">
-        <!--here is the text-->
 
+        <!--session result-->
+        <p class="text-center">
+        <?php
 
-        <p>over ons pagina</p>
+        echo "je naam is " . $_SESSION["name"] . "<br>";
+        echo "je bent " . $_SESSION["age"] . " jaar<br>";
+        echo "je email is: " . $_SESSION["email"] . "<br>";
+        echo "je woont " . $_SESSION["adres"] . "<br>";
+        echo "je stad is " . $_SESSION["place"] . "<br>";
+     ?>
+        </p>
 
         <!--start footer-->
         <footer class="container-fluid bg-primary">
-    <div class="container text-white">
-        <div class="row text-center fs-15">
-            <!--the first col with contact gegevens-->
-            <div class="col-6">
-                <div class="text-white">
-                    <p>
-                    <h5>  Contactgegevens</h5>
-                    sv groenland <br>
-                    citroenplantsoen 41 <br>
-                    2552QS <br>
-                    070-3978929<br>
-                    </p>
+            <div class="container text-white">
+                <div class="row text-center fs-15">
+                    <!--the first col with contact gegevens-->
+                    <div class="col-6">
+                        <div class="text-white">
+                            <p>
+                            <h5>  Contactgegevens</h5>
+                            sv groenland <br>
+                            citroenplantsoen 41 <br>
+                            2552QS <br>
+                            070-3978929<br>
+                            </p>
+                        </div>
+                    </div>
+                    <!--the second col with openingstijden-->
+                    <div class="col-6">
+                        <div class="text-white">
+                            <p>
+                            <h5>  teams</h5>
+                            Jo9 <br>
+                            Jo16 <br>
+                            Jo18 <br>
+                            1e  <br>
+                            </p>
+                        </div>
+                    </div>
                 </div>
             </div>
-            <!--the second col with openingstijden-->
-            <div class="col-6">
-                <div class="text-white">
-                    <p>
-                    <h5>  teams</h5>
-                    Jo9 <br>
-                    Jo16 <br>
-                    Jo18 <br>
-                    1e  <br>
-                    </p>
-                </div>
-            </div>
-        </div>
-    </div>
-</footer>
+        </footer>
 
-</div>
+    </div>
 </div>
 </body>
 </html>

@@ -1,17 +1,12 @@
 <?php
-$name = '';
-$age = '';
-$email = '';
-$adres = '';
-$place = "";
-
+session_start();
+include "data.php";
+global $db;
 
 try {
-    $db = new PDO("mysql:host=localhost;dbname=sv_groenland",
-        "root", "");
-
 
 if (isset($_POST['submit'])) {
+
 
     $name = filter_input(INPUT_POST, "name", FILTER_SANITIZE_STRING);
     $age = filter_input(INPUT_POST, "age", FILTER_SANITIZE_SPECIAL_CHARS);
@@ -19,15 +14,21 @@ if (isset($_POST['submit'])) {
     $emailcheck = filter_input(INPUT_POST, "email", FILTER_VALIDATE_EMAIL);
     $adres = filter_input(INPUT_POST, "adres", FILTER_SANITIZE_SPECIAL_CHARS);
     $place = filter_input(INPUT_POST, "place", FILTER_SANITIZE_SPECIAL_CHARS);
+    $image = filter_input(INPUT_POST, "image", FILTER_SANITIZE_STRING);
 
-    $query = $db->prepare ("INSERT INTO players (name,age,email,adres,place,img) VALUES (:name, :age, :email, :adres, :place)");
+
+    $query = $db->prepare ("INSERT INTO players (name,age,email,adres,place,image) VALUES (:name, :age, :email, :adres, :place, :image)");
     $query->bindParam("name", $name);
     $query->bindParam("age", $age);
     $query->bindParam("email", $email);
     $query->bindParam("adres", $adres);
     $query->bindParam("place", $place);
+    $query->bindParam("image", $image);
+
+
     if ($query->execute())  {
         echo "de nieuwe gegevens zijn toegevoegd";
+        header('Location: lijst.php');
     } else{
         echo "er is een fout opgetreden";
     }
@@ -36,6 +37,8 @@ if (isset($_POST['submit'])) {
 }catch (PDOException $e) {
     die("error!: " . $e->getMessage());
 }
+
+
 ?>
 
 <html lang="en">
@@ -68,13 +71,13 @@ if (isset($_POST['submit'])) {
                         <a class="nav-link  text-light fs-4 col-1 ps-4" aria-current="page" href="overons.php">S.V.GROENLAND</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link active text-light fs-4 col-1" href="aanmelden.php"><u>aanmelden</u></a>
+                        <a class="nav-link active text-light fs-4 col-1" href="aanmelden.php">aanmelden</a>
                     </li>
                     <li class="nav-item">
                         <a class="nav-link active text-light fs-4 col-1" href="lijst.php">lijst</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link active text-light fs-4 col-1" href="toevoegen.php">toevoegen</a>
+                        <a class="nav-link active text-light fs-4 col-1" href="toevoegen.php"><u>toevoegen</u></a>
                     </li>
                 </ul>
             </div>
@@ -115,6 +118,12 @@ if (isset($_POST['submit'])) {
                     <label class="form-label">Woonplaats</label>
                     <br>
                     <input type="text" name="place" class="form-control">
+                </p>
+
+                <p>
+                    <label>Select Image File:</label>
+                    <br>
+                    <input type="file" name="image">
                 </p>
 
                 <p>

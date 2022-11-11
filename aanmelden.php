@@ -1,6 +1,7 @@
 <?php
 session_start();
 include ("data.php");
+global $db;
 $warning = false;
 $name = '';
 $age = '';

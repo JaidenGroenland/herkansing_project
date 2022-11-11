@@ -3,6 +3,7 @@ session_start();
 
 
 include ("data.php");
+global $db;
 try{
 $query = $db->prepare("SELECT * FROM players");
 $query->execute();
@@ -55,7 +56,7 @@ $result = $query->fetchAll(PDO::FETCH_ASSOC);
     <!--here is the text-->
     <div class="container-fluid p-0">
         <img src="img/voetbal-banner.jpg" class="pb-5" alt="banner" width="100%">
-
+            <p>ingescheven mensen</p>
         <!--database result comes here-->
         <p/>
         <style type="text/css">
@@ -69,7 +70,7 @@ $result = $query->fetchAll(PDO::FETCH_ASSOC);
                 width: 100px;
             }
         </style>
-
+        <img src="" alt="">
         <?php
         echo "<table>";
         foreach ($result as $data)  {
@@ -80,6 +81,7 @@ $result = $query->fetchAll(PDO::FETCH_ASSOC);
             echo "<td>" . $data["email"] . "</td>";
             echo "<td>" . $data["adres"] . "</td>";
             echo "<td>" . $data["place"] . "</td>";
+            echo '<td>' . '<img src="img/ " $data["image"]" '   . '</td>';
             echo "</tr>";
         }
         echo "</table>";
@@ -87,8 +89,7 @@ $result = $query->fetchAll(PDO::FETCH_ASSOC);
             die("error!: " . $e->getMessage());
         }
         ?>
-        <img src="img/ <?php echo ["img"]?>>;
-        </p>
+
         <!--start footer-->
         <footer class="container-fluid bg-primary">
             <div class="container text-white">
